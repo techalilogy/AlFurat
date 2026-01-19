@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlFurat Café </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أساسيات التصميم */
+        :root {
+            --primary-dark: #0a0a0a;
+            --secondary-dark: #1a1a1a;
+            --accent-gold: #d4af37;
+            --accent-copper: #b87333;
+            --text-light: #f5f5f5;
+            --text-gray: #aaaaaa;
+            --card-bg: rgba(26, 26, 26, 0.8);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(180, 120, 50, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.05) 0%, transparent 20%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* الهيدر */
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .logo::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-copper), transparent);
+        }
+        
+        .tagline {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-top: 10px;
+        }
+        
+        /* قسم التصفية */
+        .filter-section {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding: 0 15px;
+        }
+        
+        .filter-btn {
+            background-color: var(--secondary-dark);
+            color: var(--text-gray);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--accent-gold);
+            color: var(--primary-dark);
+            border-color: var(--accent-gold);
+        }
+        
+        /* قسم المنتجات */
+        .menu-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .section-title {
+            grid-column: 1 / -1;
+            text-align: center;
+            font-size: 2rem;
+            color: var(--accent-gold);
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+        }
+        
+        .section-title::before {
+            content: "☕";
+            position: absolute;
+            left: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .menu-item {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+        
+        .item-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        
+        .item-details {
+            padding: 20px;
+        }
+        
+        .item-name {
+            font-size: 1.4rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .item-icon {
+            font-size: 1.2rem;
+            color: var(--accent-copper);
+        }
+        
+        .item-desc {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        /* صورة بديلة إذا لم توجد الصورة */
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, var(--secondary-dark), #2a2a2a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        
+        .placeholder-icon {
+            font-size: 3rem;
+            color: var(--accent-copper);
+            opacity: 0.5;
+        }
+        
+        /* الفوتر */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+            color: var(--text-gray);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+        
+        /* التجاوب مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .menu-section {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.7rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .menu-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-section {
+                padding: 0 5px;
+            }
+            
+            .filter-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* تأثيرات إضافية */
+        .smoke-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d4af37' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body>
+    <!-- تأثير الدخان الخفيف -->
+    <div class="smoke-effect"></div>
+    
+    <div class="container">
+        <!-- الهيدر -->
+        <header>
+            <div class="logo-container">
+                <h1 class="logo">AlFurat Café</h1>
+            </div>
+            <p class="tagline">استمتع بتجربة فريدة من المشروبات في أجواء طبيعية هادئة</p>
+        </header>
+        
+        <!-- أزرار التصفية -->
+        <div class="filter-section">
+            <button class="filter-btn active" data-filter="all">الكل</button>
+            <button class="filter-btn" data-filter="hot">المشروبات الساخنة</button>
+            <button class="filter-btn" data-filter="cold">المشروبات الباردة</button>
+            <button class="filter-btn" data-filter="other">خدمات أخرى</button>
+        </div>
+        
+        <!-- قسم المنيو -->
+        <div class="menu-section" id="menu-container">
+            <!-- سيتم إضافة العناصر هنا بواسطة JavaScript -->
+        </div>
+    </div>
+    
+    <!-- الفوتر -->
+    <footer>
+        <div class="footer-logo">AlFurat Café</div>
+        <p>جميع الحقوق محفوظة © 2026</p>
+        <p>AlFurat Café - المنيو الإلكتروني</p>
+    </footer>
+
+    <script>
+        // بيانات المنيو مع أسماء الصور المحلية
+        const menuItems = [
+            {
+                id: 1,
+                name: "شاي",
+                category: "hot",
+                icon: "fas fa-mug-hot",
+                description: "شاي طازج بأجود الأوراق، يقدم مع النعناع أو الزعتر أو الأعشاب",
+                image: "img/tea.jpg"
+            },
+            {
+                id: 2,
+                name: "قهوة",
+                category: "hot",
+                icon: "fas fa-coffee",
+                description: "قهوة عربية أصيلة محضرة بأجود حبوب البن المحمصة حديثاً",
+                image: "img/qahwa.jpg"
+            },
+            {
+                id: 3,
+                name: "نسكافيه",
+                category: "hot",
+                icon: "fas fa-mug-saucer",
+                description: "نسكافيه سريع التحضير بنكهات متنوعة وقوام غني",
+                image: "img/nesca.jpg"
+            },
+            {
+                id: 4,
+                name: "3×1",
+                category: "hot",
+                icon: "fas fa-blender",
+                description: "مزيج فريد من القهوة والكريمة والشوكولاتة في مشروب دافئ",
+                image: "img/hot.jpg"
+            },
+            {
+                id: 5,
+                name: "كابتشينو",
+                category: "hot",
+                icon: "fas fa-cup-togo",
+                description: "كابتشينو إيطالي تقليدي مع رغوة حليب ناعمة ومسحوق شوكولاتة",
+                image: "img/cabadb.jpeg"
+            },
+            {
+                id: 6,
+                name: "سحلب",
+                category: "hot",
+                icon: "fas fa-whiskey-glass",
+                description: "سحلب دافئ مع حليب كريمي ومكسرات مطحونة وفانيليا",
+                image: "img/sahlab.jpg"
+            },
+            {
+                id: 7,
+                name: "زهورات",
+                category: "hot",
+                icon: "fas fa-leaf",
+                description: "مشروب أعشاب طبيعية مهدئ ومنعش بمجموعة من الزهور المجففة",
+                image: "img/taz.jpg"
+            },
+            {
+                id: 8,
+                name: "مشروبات باردة",
+                category: "cold",
+                icon: "fas fa-glass-water",
+                description: "تشكيلة من العصائر الطازجة والمشروبات المثلجة المنعشة",
+                image: "img/calod.jpg"
+            },
+            {
+                id: 9,
+                name: "مشروبات ساخنة",
+                category: "hot",
+                icon: "fas fa-fire",
+                description: "تشكيلة واسعة من المشروبات الساخنة لدفيء الأجواء الباردة",
+                image: "img/hot.jpg"
+            },
+            {
+                id: 10,
+                name: "تحويل رصيد",
+                category: "other",
+                icon: "fas fa-exchange-alt",
+                description: "خدمة تحويل الرصيد لجميع شركات الاتصالات",
+                image: "img/تحويل-رصيد.jpg"
+            },
+            {
+                id: 11,
+                name: "دخان",
+                category: "other",
+                icon: "fas fa-smoking",
+                description: "تشكيلة متنوعة من منتجات الدخان المحلية والمستوردة",
+                image: "img/arkela.png"
+            },
+            {
+                id: 12,
+                name: "موالح",
+                category: "cold",
+                icon: "fas fa-lemon",
+                description: "عصائر الموالح الطازجة (برتقال، ليمون، جريب فروت)",
+                image: "img/mawalh.jpg"
+            },
+            {
+                id: 13,
+                name: "مشروبات معززة بنكهات محروفة",
+                category: "cold",
+                icon: "fas fa-wine-bottle",
+                description: "مشروبات فريدة بنكهات محروقة مميزة تخلق تجربة فريدة",
+                image: "img/mahr.jpg"
+            }
+        ];
+
+        // عناوين الأقسام
+        const sectionTitles = {
+            hot: "المشروبات الساخنة",
+            cold: "المشروبات الباردة",
+            other: "خدمات أخرى"
+        };
+
+        // دالة للتحقق من وجود الصورة
+        function checkImageExists(imageUrl, callback) {
+            const img = new Image();
+            img.onload = function() {
+                callback(true);
+            };
+            img.onerror = function() {
+                callback(false);
+            };
+            img.src = imageUrl;
+        }
+
+        // دالة لإنشاء عناصر المنيو
+        function createMenuItems(items) {
+            const menuContainer = document.getElementById('menu-container');
+            menuContainer.innerHTML = '';
+            
+            // تجميع العناصر حسب الفئة
+            const categorizedItems = {
+                hot: items.filter(item => item.category === 'hot'),
+                cold: items.filter(item => item.category === 'cold'),
+                other: items.filter(item => item.category === 'other')
+            };
+            
+            // إضافة عناوين الأقسام والعناصر
+            for (const category in categorizedItems) {
+                if (categorizedItems[category].length > 0) {
+                    // إضافة عنوان القسم
+                    const sectionTitle = document.createElement('h2');
+                    sectionTitle.className = 'section-title';
+                    sectionTitle.textContent = sectionTitles[category];
+                    menuContainer.appendChild(sectionTitle);
+                    
+                    // إضافة عناصر القسم
+                    categorizedItems[category].forEach(item => {
+                        const menuItem = document.createElement('div');
+                        menuItem.className = `menu-item ${item.category}`;
+                        menuItem.setAttribute('data-category', item.category);
+                        
+                        // التحقق من وجود الصورة أولاً
+                        checkImageExists(item.image, function(exists) {
+                            let imageHtml;
+                            if (exists) {
+                                imageHtml = `<img src="${item.image}" alt="${item.name}" class="item-image" loading="lazy">`;
+                            } else {
+                                // استخدام صورة بديلة
+                                imageHtml = `
+                                    <div class="image-placeholder">
+                                        <i class="${item.icon} placeholder-icon"></i>
+                                    </div>
+                                `;
+                            }
+                            
+                            menuItem.innerHTML = `
+                                ${imageHtml}
+                                <div class="item-details">
+                                    <h3 class="item-name">
+                                        ${item.name}
+                                        <span class="item-icon"><i class="${item.icon}"></i></span>
+                                    </h3>
+                                    <p class="item-desc">${item.description}</p>
+                                </div>
+                            `;
+                        });
+                        
+                        menuContainer.appendChild(menuItem);
+                    });
+                }
+            }
+        }
+
+        // دالة لتصفية العناصر
+        function filterItems(category) {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                if (btn.getAttribute('data-filter') === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            if (category === 'all') {
+                createMenuItems(menuItems);
+            } else {
+                const filteredItems = menuItems.filter(item => item.category === category);
+                createMenuItems(filteredItems);
+            }
+        }
+
+        // تهيئة الصفحة عند التحميل
+        document.addEventListener('DOMContentLoaded', function() {
+            // إنشاء عناصر المنيو
+            createMenuItems(menuItems);
+            
+            // إضافة أحداث النقر على أزرار التصفية
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-filter');
+                    filterItems(category);
+                });
+            });
+            
+            // تأثيرات إضافية للعناصر
+            setTimeout(() => {
+                const menuItemsElements = document.querySelectorAll('.menu-item');
+                menuItemsElements.forEach(item => {
+                    item.addEventListener('mouseenter', function() {
+                        const icon = this.querySelector('.item-icon i');
+                        if (icon) {
+                            icon.style.transform = 'rotate(15deg) scale(1.2)';
+                            icon.style.transition = 'transform 0.3s ease';
+                        }
+                    });
+                    
+                    item.addEventListener('mouseleave', function() {
+                        const icon = this.querySelector('.item-icon i');
+                        if (icon) {
+                            icon.style.transform = 'rotate(0) scale(1)';
+                        }
+                    });
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
